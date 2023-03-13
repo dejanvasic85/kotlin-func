@@ -1,0 +1,1 @@
+/Users/dejan.vasic/IdeaProjects/kotlin-func/build/classes/kotlin/main/MainKt.class
