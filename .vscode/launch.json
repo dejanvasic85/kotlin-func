@@ -16,7 +16,7 @@
       "request": "launch",
       "name": "Chapter 2",
       "projectRoot": "${workspaceFolder}",
-      "mainClass": "chapter_one.SortedKt"
+      "mainClass": "chapter_two.MainKt"
     }
   ]
 }
