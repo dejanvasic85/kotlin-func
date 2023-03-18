@@ -17,6 +17,13 @@
       "name": "Chapter 2",
       "projectRoot": "${workspaceFolder}",
       "mainClass": "chapter_two.MainKt"
+    },
+    {
+      "type": "kotlin",
+      "request": "launch",
+      "name": "Chapter 3",
+      "projectRoot": "${workspaceFolder}",
+      "mainClass": "chapter_three.MainKt"
     }
   ]
 }
