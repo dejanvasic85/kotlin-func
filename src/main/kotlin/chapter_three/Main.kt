@@ -42,9 +42,6 @@ fun main() {
 
     val filtered = MyList.filter(data) { a -> a > 2 }
     println("Filtered larger than 2: $filtered")
-
-//    val flatMapped = MyList.flatMap(data) { a -> MyList.of(a, a) }
-//    println("Flat mapped: $flatMapped")
 }
 
 data class Person(val points: Int)
@@ -93,8 +90,7 @@ sealed class MyList<out A> {
             return when (xs) {
                 is Nil -> xs
                 is Cons -> {
-                    if (f(xs.head))
-                        dropWhile(xs.tail, f)
+                    if (f(xs.head)) dropWhile(xs.tail, f)
                     else xs
                 }
             }
@@ -111,59 +107,44 @@ sealed class MyList<out A> {
         }
 
         // Exercise 3.10
-        fun sum(ints: MyList<Int>): Int =
-            foldLeft(ints, 0) { x, y -> x + y }
+        fun sum(ints: MyList<Int>): Int = foldLeft(ints, 0) { x, y -> x + y }
 
         // Exercise 3.10
-        fun product(dbs: MyList<Double>): Double =
-            foldLeft(dbs, 1.toDouble()) { x, y -> x * y }
+        fun product(dbs: MyList<Double>): Double = foldLeft(dbs, 1.toDouble()) { x, y -> x * y }
 
         // Exercise 3.8
-        fun <A> length(xs: MyList<A>): Int =
-            foldLeft(xs, 0) { prev, _ -> prev + 1 }
+        fun <A> length(xs: MyList<A>): Int = foldLeft(xs, 0) { prev, _ -> prev + 1 }
 
         // Exercise 3.11
-        fun <A> reverse(xs: MyList<A>): MyList<A> =
-            foldLeft(xs, empty()) { prev, curr -> Cons(curr, prev) }
+        fun <A> reverse(xs: MyList<A>): MyList<A> = foldLeft(xs, empty()) { prev, curr -> Cons(curr, prev) }
 
         // Exercise 3.13
-        fun <A> append(a1: MyList<A>, a2: MyList<A>): MyList<A> =
-            foldRight(a1, a2) { x, y -> Cons(x, y) }
+        fun <A> append(a1: MyList<A>, a2: MyList<A>): MyList<A> = foldRight(a1, a2) { x, y -> Cons(x, y) }
 
         // Exercise 3.14
-        fun <A> concat(xxs: MyList<MyList<A>>): MyList<A> =
-            foldRight(xxs, empty()) { x, y -> append(x, y) }
+        fun <A> concat(xxs: MyList<MyList<A>>): MyList<A> = foldRight(xxs, empty()) { x, y -> append(x, y) }
 
         // Exercise 3.15
-        fun increment(ints: MyList<Int>): MyList<Int> =
-            foldRight(ints, empty()) { a, b -> Cons(a + 1, b) }
+        fun increment(ints: MyList<Int>): MyList<Int> = foldRight(ints, empty()) { a, b -> Cons(a + 1, b) }
 
         // Exercise 3.16
         fun doubleToString(doubles: MyList<Double>): MyList<String> =
             foldRight(doubles, empty()) { a, b -> Cons(a.toString(), b) }
 
         // Exercise 3.17
-        fun <A, B> map(xs: MyList<A>, f: (A) -> B): MyList<B> =
-            foldRight(xs, empty()) { x, y -> Cons(f(x), y) }
+        fun <A, B> map(xs: MyList<A>, f: (A) -> B): MyList<B> = foldRight(xs, empty()) { x, y -> Cons(f(x), y) }
 
         // Exercise 3.18
-        fun <A> filter(xs: MyList<A>, f: (A) -> Boolean): MyList<A> =
-            foldRight(xs, empty())
-            { x, y ->
-                if (f(x)) Cons(x, y)
-                else y
-            }
+        fun <A> filter(xs: MyList<A>, f: (A) -> Boolean): MyList<A> = foldRight(xs, empty()) { x, y ->
+            if (f(x)) Cons(x, y)
+            else y
+        }
 
-        // Exercise 3.19
-//        fun <A, B> flatMap(xs: MyList<A>, f: (A) -> MyList<B>): MyList<B> {
-//            return foldRight(xs, empty()) { a -> append(a)}
-//        }
 
-        private fun <A, B> foldRight(xs: MyList<A>, z: B, f: (A, B) -> B): B =
-            when (xs) {
-                is Nil -> z
-                is Cons -> f(xs.head, foldRight(xs.tail, z, f))
-            }
+        private fun <A, B> foldRight(xs: MyList<A>, z: B, f: (A, B) -> B): B = when (xs) {
+            is Nil -> z
+            is Cons -> f(xs.head, foldRight(xs.tail, z, f))
+        }
 
         // Exercise 3.9
         private tailrec fun <A, B> foldLeft(xs: MyList<A>, z: B, f: (B, A) -> B): B {
@@ -175,13 +156,11 @@ sealed class MyList<out A> {
 
         // Exercise 3.12
         private fun <A, B> foldLeftR(xs: MyList<A>, z: B, f: (B, A) -> B): B {
-            return foldRight(xs,
-                { b: B -> b },
-                { acc, g ->
-                    { b ->
-                        g(f(b, acc))
-                    }
-                })(z)
+            return foldRight(xs, { b: B -> b }, { acc, g ->
+                { b ->
+                    g(f(b, acc))
+                }
+            })(z)
         }
     }
 }
