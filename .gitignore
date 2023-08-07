@@ -47,3 +47,5 @@ Thumbs.db
 target/
 application.properties
 application.properties.*
+
+gradle/
