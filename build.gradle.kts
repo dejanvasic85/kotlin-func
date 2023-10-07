@@ -32,3 +32,8 @@ application {
     mainClass.set("chapter_one.FibonacciKt")
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(18)
+    }
+}
