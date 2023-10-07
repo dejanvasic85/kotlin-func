@@ -65,5 +65,15 @@ class LinkedListTest : DescribeSpec({
             exception.message shouldBe "Unable to drop items from an empty list"
         }
     }
+
+    describe("dropWhile") {
+        it("should keep dropping items if they match predicate") {
+            val data = LinkedList.of(1, 2, 3)
+
+            val fruitWithoutLetterN = LinkedList.dropWhile(data) { f -> f == 1 }
+
+            fruitWithoutLetterN shouldBe Cons(2, Cons(3, Nil))
+        }
+    }
 })
 
