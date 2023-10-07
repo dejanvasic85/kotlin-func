@@ -4,7 +4,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-
 class LinkedListTest : DescribeSpec({
     describe("empty") {
         it("should create a new empty list") {
@@ -171,5 +170,13 @@ class LinkedListTest : DescribeSpec({
             mapped shouldBe Cons("1", Cons("2", Cons("3", Nil)))
         }
     }
-})
 
+    describe("filter") {
+        it("should filter items from the list") {
+            val data = LinkedList.of("apple", "orange", "banana")
+            val filtered = LinkedList.filter(data) { f -> f.length > 5 }
+
+            filtered shouldBe Cons("orange", Cons("banana", Nil))
+        }
+    }
+})
