@@ -93,13 +93,5 @@ sealed class LinkedList<out A> {
                 is Cons -> foldLeft(xs.tail, f(z, xs.head), f)
             }
         }
-
-        private fun <A, B> foldLeftR(xs: LinkedList<A>, z: B, f: (B, A) -> B): B {
-            return foldRight(xs, { b: B -> b }, { acc, g ->
-                { b ->
-                    g(f(b, acc))
-                }
-            })(z)
-        }
     }
 }
