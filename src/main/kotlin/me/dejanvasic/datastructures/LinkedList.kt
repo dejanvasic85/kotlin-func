@@ -56,6 +56,7 @@ sealed class LinkedList<out A> {
         }
 
         // Exercise 3.1
+        // Removes the first item from the list (keeps the tail)
         fun <A> tail(aa: LinkedList<A>): LinkedList<A> {
             return when (aa) {
                 is Nil -> throw IllegalStateException("List cannot have empty chapter_one.getTail")
@@ -64,6 +65,7 @@ sealed class LinkedList<out A> {
         }
 
         // Exercise 3.2
+        // Removes the current head with a new value
         fun <A> setHead(xs: LinkedList<A>, x: A): LinkedList<A> {
             return when (xs) {
                 is Nil -> throw IllegalStateException("Cannot replace chapter_one.getHead of a Nil list")
