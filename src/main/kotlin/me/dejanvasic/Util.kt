@@ -1,6 +1,6 @@
-package chapter_two
+package me.dejanvasic
 
-fun main() {
+fun main_prev2() {
     val func = curry<Int, Int, Int> { a, b -> a + b }
     println("chapter_two.curry plus: ${func(1)(2)}")
 

@@ -1,6 +1,6 @@
-package chapter_four
+package me.dejanvasic
 
-fun main() {
+fun main_prev() {
     val option = Some(1)
     val data = option.map { f -> f * 2 }
     println(data)

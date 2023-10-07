@@ -1,6 +1,6 @@
-package me.dejanvasic.datastructures
+package me.dejanvasic
 
-fun main() {
+fun main_old() {
     val data = LinkedList.of(1, 2, 3, 4, 5)
 
     val tailOfData = LinkedList.tail(data)
