@@ -6,6 +6,15 @@ sealed class Option<out A> {
             // Map is only required at the bottom level as higher above would wrap the value in Option
             return a.flatMap { ax -> b.map { bx -> f(ax, bx) } }
         }
+
+        fun <A> sequence(xs: LinkedList<Option<A>>): Option<LinkedList<A>> {
+            return LinkedList.foldRight(xs, Some(Nil)) { oa: Option<A>, ol: Option<LinkedList<A>> ->
+                // Using map2 we can pass the function that operates on the real values and creates LinkedList
+                map2(oa, ol) { a: A, list: LinkedList<A> ->
+                    Cons(a, list)
+                }
+            }
+        }
     }
 }
 

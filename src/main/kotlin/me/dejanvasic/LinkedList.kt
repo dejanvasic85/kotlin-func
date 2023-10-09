@@ -82,12 +82,12 @@ sealed class LinkedList<out A> {
             else y
         }
 
-        private fun <A, B> foldRight(xs: LinkedList<A>, z: B, f: (A, B) -> B): B = when (xs) {
+        tailrec fun <A, B> foldRight(xs: LinkedList<A>, z: B, f: (A, B) -> B): B = when (xs) {
             is Nil -> z
             is Cons -> f(xs.head, foldRight(xs.tail, z, f))
         }
 
-        private tailrec fun <A, B> foldLeft(xs: LinkedList<A>, z: B, f: (B, A) -> B): B {
+        tailrec fun <A, B> foldLeft(xs: LinkedList<A>, z: B, f: (B, A) -> B): B {
             return when (xs) {
                 is Nil -> z
                 is Cons -> foldLeft(xs.tail, f(z, xs.head), f)

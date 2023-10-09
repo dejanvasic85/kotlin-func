@@ -83,4 +83,20 @@ class OptionTest : DescribeSpec({
             data shouldBe None
         }
     }
+
+    describe("sequence") {
+        it("should return Some when all list values have a value") {
+            val data = LinkedList.of(Some(1), Some(2), Some(3))
+            val result = Option.sequence(data)
+
+            result shouldBe Some(LinkedList.of(1, 2, 3))
+        }
+
+        it("should return None when a list contains a None") {
+            val data = LinkedList.of(Some(1), None, Some(3))
+            val result = Option.sequence(data)
+
+            result shouldBe None
+        }
+    }
 })
