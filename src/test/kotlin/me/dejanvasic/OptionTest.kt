@@ -60,4 +60,27 @@ class OptionTest : DescribeSpec({
             value shouldBe None
         }
     }
+
+    describe("flatMap") {
+        it("should return mapped object to another Option") {
+            val data = Some("hello")
+            val flatMapped = data.flatMap { d -> Some("$d mapped") }
+
+            flatMapped shouldBe Some("hello mapped")
+        }
+    }
+
+    describe("map2") {
+        it("should lift both parameters to Options and return an option for a given function") {
+            val data = Option.map2(Some("hello"), Some("world")) { a, b -> "$a $b" }
+
+            data shouldBe Some("hello world")
+        }
+
+        it("should return None when first parameter is none") {
+            val data = Option.map2(None, Some("world")) { a, b -> "$a $b" }
+
+            data shouldBe None
+        }
+    }
 })
