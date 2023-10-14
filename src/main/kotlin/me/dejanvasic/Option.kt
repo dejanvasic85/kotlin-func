@@ -8,10 +8,14 @@ sealed class Option<out A> {
         }
 
         fun <A> sequence(xs: LinkedList<Option<A>>): Option<LinkedList<A>> {
-            return LinkedList.foldRight(xs, Some(Nil)) { oa: Option<A>, ol: Option<LinkedList<A>> ->
-                // Using map2 we can pass the function that operates on the real values and creates LinkedList
-                map2(oa, ol) { a: A, list: LinkedList<A> ->
-                    Cons(a, list)
+            return traverse(xs) { it }
+        }
+
+        fun <A, B> traverse(xs: LinkedList<A>, f: (A) -> Option<B>): Option<LinkedList<B>> {
+            return when (xs) {
+                is Nil -> Some(Nil)
+                is Cons -> {
+                    map2(f(xs.head), traverse(xs.tail, f)) { b, xb -> Cons(b, xb) }
                 }
             }
         }

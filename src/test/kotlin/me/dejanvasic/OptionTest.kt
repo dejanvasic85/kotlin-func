@@ -99,4 +99,19 @@ class OptionTest : DescribeSpec({
             result shouldBe None
         }
     }
+
+    describe("traverse") {
+        it("should return a mapped Option of a traversed list") {
+            val data = LinkedList.of("1", "2", "3")
+            val result = Option.traverse(data) { a ->
+                try {
+                    Some(a.toInt())
+                } catch (err: Error) {
+                    None
+                }
+            }
+
+            result shouldBe Some(Cons(1, Cons(2, Cons(3, Nil))))
+        }
+    }
 })
