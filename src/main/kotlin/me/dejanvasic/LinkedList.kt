@@ -60,6 +60,8 @@ sealed class LinkedList<out A> {
 
         fun sum(ints: LinkedList<Int>): Int = foldLeft(ints, 0) { x, y -> x + y }
 
+        fun sum(dbl: LinkedList<Double>): Double = foldRight(dbl, 0.toDouble()) { x, y -> x + y }
+
         fun product(dbs: LinkedList<Double>): Double = foldLeft(dbs, 1.toDouble()) { x, y -> x * y }
 
         fun <A> length(xs: LinkedList<A>): Int = foldLeft(xs, 0) { prev, _ -> prev + 1 }

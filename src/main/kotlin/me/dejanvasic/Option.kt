@@ -1,5 +1,6 @@
 package me.dejanvasic
 
+
 sealed class Option<out A> {
     companion object {
         fun <A, B, C> map2(a: Option<A>, b: Option<B>, f: (A, B) -> C): Option<C> {

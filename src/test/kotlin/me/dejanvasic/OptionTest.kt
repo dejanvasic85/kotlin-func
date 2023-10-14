@@ -2,6 +2,7 @@ package me.dejanvasic
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import java.lang.NumberFormatException
 
 class OptionTest : DescribeSpec({
     describe("map") {
@@ -112,6 +113,19 @@ class OptionTest : DescribeSpec({
             }
 
             result shouldBe Some(Cons(1, Cons(2, Cons(3, Nil))))
+        }
+
+        it("should return a None when the supplied function returns a None") {
+            val data = LinkedList.of("1", "hello", "3")
+            val result = Option.traverse(data) { a ->
+                try {
+                    Some(a.toInt())
+                } catch (err: NumberFormatException) {
+                    None
+                }
+            }
+
+            result shouldBe None
         }
     }
 })
