@@ -6,6 +6,9 @@ sealed class Either<out E, out A> {
             return ae.flatMap { a -> be.flatMap { b -> Right(f(a, b)) } }
         }
 
+        fun <E, A> sequence(xs: LinkedList<Either<E, A>>): Either<E, LinkedList<A>> {
+            return traverse(xs) { it }
+        }
 
         fun <E, A, B> traverse(xs: LinkedList<A>, f: (A) -> Either<E, B>): Either<E, LinkedList<B>> {
             return when (xs) {
@@ -20,7 +23,6 @@ sealed class Either<out E, out A> {
                 is Cons -> Right(LinkedList.sum(xs) / LinkedList.length(xs))
             }
         }
-
 
         fun <A> catches(a: () -> A): Either<Exception, A> {
             return try {

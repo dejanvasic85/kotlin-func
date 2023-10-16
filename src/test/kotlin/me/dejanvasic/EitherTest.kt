@@ -106,4 +106,12 @@ class EitherTest : DescribeSpec({
             result shouldBe Left("Value cannot be 2")
         }
     }
+
+    describe("sequence") {
+        it("should return Right when all items are Right") {
+            val result = Either.sequence(LinkedList.of(Right("1"), Right("2")))
+
+            result shouldBe Right(LinkedList.of("1", "2"))
+        }
+    }
 })
