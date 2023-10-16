@@ -90,4 +90,20 @@ class EitherTest : DescribeSpec({
             result shouldBe Left(1)
         }
     }
+
+    describe("traverse") {
+        it("should return Right with a mapped list") {
+            val result = Either.traverse(LinkedList.of(1, 2, 3)) { a -> Right(a * 2) }
+
+            result shouldBe Right(Cons(2, Cons(4, Cons(6, Nil))))
+        }
+
+        it("should return Left when one of the items is left") {
+            val result = Either.traverse(LinkedList.of(1, 2, 3)) { a ->
+                if (a == 2) Left("Value cannot be 2") else Right(a * 2)
+            }
+
+            result shouldBe Left("Value cannot be 2")
+        }
+    }
 })

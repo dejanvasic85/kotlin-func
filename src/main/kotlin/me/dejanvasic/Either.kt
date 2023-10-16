@@ -6,12 +6,21 @@ sealed class Either<out E, out A> {
             return ae.flatMap { a -> be.flatMap { b -> Right(f(a, b)) } }
         }
 
+
+        fun <E, A, B> traverse(xs: LinkedList<A>, f: (A) -> Either<E, B>): Either<E, LinkedList<B>> {
+            return when (xs) {
+                is Nil -> Right(Nil)
+                is Cons -> map2(f(xs.head), traverse(xs.tail, f)) { b, xb -> Cons(b, xb) }
+            }
+        }
+
         fun mean(xs: LinkedList<Double>): Either<String, Double> {
             return when (xs) {
                 is Nil -> Left("List cannot be empty to produce a mean value")
                 is Cons -> Right(LinkedList.sum(xs) / LinkedList.length(xs))
             }
         }
+
 
         fun <A> catches(a: () -> A): Either<Exception, A> {
             return try {
