@@ -8,12 +8,12 @@ data class ConsStream<out A>(
 
 object EmptyStream : Stream<Nothing>()
 
-sealed class Stream<out A> {
-    companion object {
-        fun <A> Stream<A>.headOption(): Option<A> =
-            when (this) {
-                is EmptyStream -> None
-                is ConsStream -> Some(head())
-            }
+fun <A> Stream<A>.headOption(): Option<A> =
+    when (this) {
+        is EmptyStream -> None
+        is ConsStream -> Some(head())
     }
+
+sealed class Stream<out A> {
+
 }
