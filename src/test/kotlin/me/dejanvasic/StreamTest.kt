@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class StreamTest : DescribeSpec({
     describe("headOption") {
         it("should return the head value when there is an item") {
-            val stream = ConsStream({ 1 }, { EmptyStream })
+            val stream = StreamCons({ 1 }, { StreamEmpty })
 
             val head = stream.headOption()
 
@@ -14,7 +14,7 @@ class StreamTest : DescribeSpec({
         }
 
         it("should return Nothing") {
-            val stream = EmptyStream
+            val stream = StreamEmpty
 
             val head = stream.headOption()
 
@@ -104,6 +104,64 @@ class StreamTest : DescribeSpec({
             val areAllOne = stream.forAll { a -> a == 1 }
 
             areAllOne shouldBe false
+        }
+    }
+
+    describe("map") {
+        it("should map all values from Int to String") {
+            val stream = Stream.of(1, 2, 3)
+
+            val mapped = stream.map { a -> a.toString() }
+
+            mapped.length() shouldBe 3
+            mapped.headOption() shouldBe Some("1")
+        }
+    }
+
+    describe("append") {
+        it("should add another stream to the end") {
+            val stream = Stream.of(1).append(Stream.of(2))
+
+            stream.length() shouldBe 2
+        }
+    }
+
+    describe("flatMap") {
+        it("should flat map all Stream values") {
+            val stream = Stream.of(1, 2, 3)
+
+            val flat = stream.flatMap { a -> Stream.of(a.toString()) }
+
+            flat.headOption() shouldBe Some("1")
+            flat.length() shouldBe 3
+        }
+    }
+
+    describe("constantStream") {
+        it("should create an infinite stream of constant values") {
+            val stream = Stream.constant("a")
+
+            val threeItems = stream.take(3)
+
+            threeItems.length() shouldBe 3
+            threeItems.headOption() shouldBe Some("a")
+        }
+    }
+
+    describe("from") {
+        it("should generate an infinite incremental numbers") {
+            val result = Stream.from(5).take(3).takeWhile { a -> a > 6 }
+
+            result.headOption() shouldBe Some(7)
+        }
+    }
+
+    describe("fibs") {
+        it("should generate an infinite stream of fibonnaci numbers in sequence") {
+            val result = Stream.fibs().drop(3).take(4).map { a -> a.toString() }
+
+            result.length() shouldBe 4
+            result.headOption() shouldBe Some("2")
         }
     }
 })
